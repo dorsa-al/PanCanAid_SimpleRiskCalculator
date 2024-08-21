@@ -1,0 +1,220 @@
+def display_intro():
+    print("""
+This is PanCanAid Simple Risk Calculator
+
+This calculator collects patient information through a series of questions, calculates the Body Mass Index (BMI),
+and evaluates the patient's risk for pancreatic cancer based on family history, gene mutations, and other factors.
+If certain high-risk criteria are met, the program will advise the patient to seek pancreatic cancer screening.
+Otherwise, it shows the patient's risk factors and suggests the patient to control them if possible.
+
+Questions covered include:
+- Age
+- Height and weight (for BMI calculation)
+- Smoking status and exposure to tobacco smoke
+- Diabetes diagnosis
+- Alcohol consumption 
+- History of pancreatitis
+- Cystic fibrosis diagnosis          
+- Family history of pancreatic cancer
+- Gene mutation status
+
+
+The program uses if-then conditions to ask follow-up questions based on initial answers and evaluates high-risk factors.
+I hope it's helpful to anyone who might use it.
+
+Author: [Dorsa Alijanzadeh]
+Date: [August 21, 2024]
+""")
+
+def check_pancreatic_cancer():
+    while True:
+        # Ask for age input
+        age_input = input("1. Enter your age (or type 'exit' to quit): ").strip()
+        
+        if age_input.lower() == 'exit':
+            print("Exiting the program. Goodbye!")
+            break
+        
+        try:
+            age = int(age_input)
+        except ValueError:
+            print("Please enter a valid number for age.")
+            continue
+        
+        # Ask for height input
+        while True:
+            height_input = input("2. Enter your height in meters (or type 'exit' to quit): ").strip()
+            if height_input.lower() == 'exit':
+                print("Exiting the program. Goodbye!")
+                return
+            try:
+                height = float(height_input)
+                if height <= 0 or height >= 2.5:
+                    print("Please enter a realistic number for height.")
+                    continue
+                break
+            except ValueError:
+                print("Please enter a valid number for height.")
+        
+        # Ask for weight input
+        while True:
+            weight_input = input("3. Enter your weight in kg (or type 'exit' to quit): ").strip()
+            if weight_input.lower() == 'exit':
+                print("Exiting the program. Goodbye!")
+                return
+            try:
+                weight = float(weight_input)
+                if weight <= 0 or weight >= 300:
+                    print("Please enter a weight greater than 0.")
+                    continue
+                break
+            except ValueError:
+                print("Please enter a valid number for weight.")
+        
+        bmi = float(weight / height ** 2)
+        print(f"Your BMI is: {bmi:.2f}")
+        
+        if bmi < 18.5:
+            bmi_status = 'underweight'
+            print('You are underweight')
+        elif 18.5 <= bmi < 25.0:
+            bmi_status = 'normal'
+            print('You have a normal BMI')
+        elif 25.0 <= bmi < 30.0:
+            bmi_status = 'overweight'
+            print('You are overweight')
+        elif 30.0 <= bmi < 35.0:
+            bmi_status = 'obese'
+            print('You are obese')
+        else:
+            bmi_status = 'severely obese'
+            print('You are severely obese')
+
+        # Smoking status
+        smoking_status = input("4. Please define your smoking status:\n"
+                               "a) Current smoker\n"
+                               "b) Former smoker\n"
+                               "c) Never smoked\n"
+                               "Enter your choice (a/b/c, or type 'exit' to quit): ").strip().lower()
+        if smoking_status == 'exit':
+            print("Exiting the program. Goodbye!")
+            break
+        
+        # Childhood exposure to tobacco smoke
+        tobacco_exposure = input("5. Did you have childhood exposure to tobacco smoke?\n"
+                                 "a) No; both parents were never-smokers.\n"
+                                 "b) Yes; one of the parents smoked.\n"
+                                 "c) Yes; both parents smoked.\n"
+                                 "Enter your choice (a/b/c, or type 'exit' to quit): ").strip().lower()
+        if tobacco_exposure == 'exit':
+            print("Exiting the program. Goodbye!")
+            break
+
+        # Diabetes diagnosis
+        diabetes = input("6. Are you diagnosed with diabetes?\n"
+                         "a) Yes\n"
+                         "b) No\n"
+                         "Enter your choice (a/b, or type 'exit' to quit): ").strip().lower()
+        if diabetes == 'exit':
+            print("Exiting the program. Goodbye!")
+            break
+
+        # Alcohol consumption
+        alcohol_consumption = input("10. Alcohol consumption:\n"
+                                    "a) I never drink alcohol\n"
+                                    "b) I drink alcohol at a light-to-moderate level\n"
+                                    "c) I am a heavy drinker (≥24 g per day or ≥9 drinks per week)\n"
+                                    "Enter your choice (a/b/c, or type 'exit' to quit): ").strip().lower()
+        if alcohol_consumption == 'exit':
+            print("Exiting the program. Goodbye!")
+            break
+        
+        # History of pancreatitis
+        pancreatitis_history = input("11. Have you ever experienced pancreatitis?\n"
+                                     "a) Yes\n"
+                                     "b) No\n"
+                                     "Enter your choice (a/b, or type 'exit' to quit): ").strip().lower()
+        if pancreatitis_history == 'exit':
+            print("Exiting the program. Goodbye!")
+            break
+        
+        # Diagnosis with cystic fibrosis
+        cystic_fibrosis = input("13. Are you diagnosed with cystic fibrosis?\n"
+                                "a) Yes\n"
+                                "b) No\n"
+                                "Enter your choice (a/b, or type 'exit' to quit): ").strip().lower()
+        if cystic_fibrosis == 'exit':
+            print("Exiting the program. Goodbye!")
+            break
+        
+        # Family history of pancreatic cancer
+        family_history = input("8. Regarding the family history: I have\n"
+                               "a) Three or more blood relatives with pancreatic cancer (PC), with at least one affected first-degree relative (FDR)\n"
+                               "b) Two affected blood relatives with PC, with at least one FDR\n"
+                               "c) At least two affected FDRs with PC\n"
+                               "d) At least one FDR with PC who in turn has a FDR with PC\n"
+                               "e) Only one affected FDR but does not fill any of the above conditions\n"
+                               "f) One or more affected blood relative(s) but do(es) not fill any of the above conditions\n"
+                               "g) No blood relatives or FDRs diagnosed with pancreatic cancer\n"
+                               "Enter your choice (a/b/c/d/e/f/g, or type 'exit' to quit): ").strip().lower()
+        if family_history == 'exit':
+            print("Exiting the program. Goodbye!")
+            break
+        
+        # Gene mutations
+        gene_mutations = input("9. Gene mutations: I am\n"
+                               "a) p16 carrier with one affected FDR\n"
+                               "b) BRCA2 mutation carrier with ≥1 affected FDR or two affected family members (no FDR)\n"
+                               "c) BRCA1 mutation carrier with ≥1 affected FDR\n"
+                               "d) PALB2 mutation carrier with one affected FDR\n"
+                               "e) Familial Atypical Multiple Mole and Melanoma Syndrome (FAMM) (or CDKN2A mutation carrier)\n"
+                               "f) Lynch syndrome with one affected FDR\n"
+                               "g) Diagnosed with Peutz–Jeghers syndrome\n"
+                               "h) Diagnosed with Ataxia–telangiectasia (or ATM mutation carrier) with one affected FDR\n"
+                               "i) Diagnosed with Longstanding chronic pancreatitis (or PRSS1 mutation carrier)\n"
+                               "j) Diagnosed with Hereditary pancreatitis\n"
+                               "k) Diagnosed with Familial adenomatous polyposis\n"
+                               "l) Diagnosed with one of the gene mutations or diseases mentioned above but do not fill the mentioned conditions\n"
+                               "m) not diagnosed with any mentioned disease or to be a carrier of the mentioned gene mutations\n"
+                               "Enter your choice (a/b/c/d/e/f/g/h/i/j/k/l/m, or type 'exit' to quit): ").strip().lower()
+        if gene_mutations == 'exit':
+            print("Exiting the program. Goodbye!")
+            break
+        
+        # Evaluate pancreatic cancer risk based on answers
+        high_risk_factors_family_history = ['a', 'b', 'c', 'd']
+        high_risk_factors_gene_mutations = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+        
+        if family_history in high_risk_factors_family_history or gene_mutations in high_risk_factors_gene_mutations:
+            print("\nYou are at high risk of pancreatic cancer and need screening.")
+        else:
+            # If not high risk based on family history or gene mutations, check for other risk factors
+            risk_factors = []
+            if smoking_status == 'a':
+                risk_factors.append("Current smoker")
+            if diabetes == 'a':
+                risk_factors.append("Diagnosed with diabetes")
+            if alcohol_consumption == 'c':
+                risk_factors.append("Heavy alcohol drinker")
+            if pancreatitis_history == 'a':
+                risk_factors.append("History of pancreatitis")
+            if cystic_fibrosis == 'a':
+                risk_factors.append("Diagnosed with cystic fibrosis")
+            if bmi_status in ['overweight', 'obese', 'severely obese']:
+                risk_factors.append(f"BMI status: {bmi_status}")
+            
+            if risk_factors:
+                print("\nYou are not at a high risk of pancreatic cancer based on family history or gene mutations.")
+                print("However, you have the following modifiable risk factors:")
+                for factor in risk_factors:
+                    print(f"- {factor}")
+            else:
+                print("\nYou are not at a high risk of pancreatic cancer based on the provided information.")
+        
+        break  # Ensure the loop breaks after completing the questionnaire
+  
+# Call the function to display the introduction
+display_intro()
+
+# Run the questionnaire
+check_pancreatic_cancer()
